@@ -1,36 +1,160 @@
-# This is a basic workflow to help you get started with Actions
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السحب على سيارة</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>اربح سيارة أحلامك الآن!</h1>
+        <p>سجل الآن لتحصل على فرصة الفوز بسيارة جديدة تمامًا</p>
+    </header>
 
-name: CI
+    <main>
+        <div class="prize-section">
+            <img src="car.jpg" alt="صورة السيارة" class="car-image">
+            <div class="countdown-timer" id="timer">00:00:00</div>
+        </div>
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+        <form id="registration-form">
+            <h2>سجل الآن</h2>
+            <label for="name">الاسم الكامل:</label>
+            <input type="text" id="name" name="name" required>
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" required>
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+            <label for="phone">رقم الهاتف:</label>
+            <input type="tel" id="phone" name="phone" required>
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+            <button type="submit">شارك الآن</button>
+        </form>
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+        <section class="terms">
+            <h3>الشروط والأحكام:</h3>
+            <p>هذا السحب متاح لجميع المشاركين بعمر 18 عامًا فما فوق. سيتم الإعلان عن الفائز في تاريخ محدد...</p>
+        </section>
+    </main>
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    <footer>
+        <p>&copy; 2024 جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #ff9800;
+    color: white;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.prize-section {
+    margin: 20px;
+}
+
+.car-image {
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.countdown-timer {
+    font-size: 1.5rem;
+    color: #ff5722;
+    font-weight: bold;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #e68900;
+}
+
+.terms {
+    margin: 20px auto;
+    padding: 10px;
+    width: 90%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}document.addEventListener('DOMContentLoaded', () => {
+    const timer = document.getElementById('timer');
+    const endDate = new Date('2024-12-31T23:59:59'); // تاريخ نهاية السحب
+
+    function updateTimer() {
+        const now = new Date();
+        const timeLeft = endDate - now;
+
+        if (timeLeft <= 0) {
+            timer.textContent = "انتهى الوقت!";
+            clearInterval(interval);
+        } else {
+            const hours = String(Math.floor((timeLeft / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+            const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
+            const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, '0');
+            timer.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+    }
+
+    const interval = setInterval(updateTimer, 1000);
+    updateTimer();
+});
